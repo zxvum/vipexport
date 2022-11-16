@@ -53,17 +53,17 @@
             <div class="card-body">
                 <div class="item__text row fw-semibold">
                     <div class="col-md-6">
-                        <div class="item__client">Клиент: Владислав</div>
-                        <div>Дата создания: 10.08.2022 08:53</div>
-                        <div>Дата обновления: 10.08.2022 08:53</div>
+                        <div class="item__client">Клиент: {{ auth()->user()->name }}</div>
+                        <div>Дата создания: {{ $package->created_at }}</div>
+                        <div>Дата обновления: {{ $package->updated_at }}</div>
                         <div>Трек номер: US34SDA67ASD76</div>
                         <div class="item__description"></div>
                     </div>
                     <div class="col-md-6">
                         <div class="item__title">Данные доставки:</div>
-                        <div class="item__fio">ФИО: Тополь Ирина</div>
-                        <div class="item__address text-truncate" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" title="" data-bs-original-title="111 111, Россия, Кавказский район, Воронеж, Пушкина 222, дом 1">Адрес: 111 111, Россия, Кавказский район, Воронеж, Пушкина 222, дом 1</div>
-                        <div class="item__phone">Телефон: 89189999999</div>
+                        <div class="item__fio">ФИО: {{ $package->address->name }} {{ $package->address->surname }}</div>
+                        <div class="item__address text-truncate" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" title="" data-bs-original-title="{{ $package->address->postal_code }}, {{ $package->address->country->name }}, {{ $package->address->region }}, {{{ $package->address->city }}}, {{ $package->address->street }}">Адрес: {{ $package->address->postal_code }}, {{ $package->address->country->name }}, {{ $package->address->region }}, {{{ $package->address->city }}}, {{ $package->address->street }}</div>
+                        <div class="item__phone">Телефон: {{ $package->address->phone_number }}</div>
                     </div>
                 </div>
                 <div class="d-flex align-items-start flex-column flex-md-row justify-content-between gap-3 mt-3">
@@ -113,16 +113,23 @@
             <div class="card-header">
                 <h5 class="mb-0">Товары в посылке</h5>
             </div>
-            <div class="card-body">
+            <form action="{{ route('package.add-order', ['id' => $package->id]) }}" method="POST" class="card-body">
+                @csrf
                 <div class="mt-1 d-flex justify-content-center">
-                    <select id='optgroup' multiple='multiple'>
-                        <optgroup label='Заказ айфонов'>
-                            <option value='3'>Айфон 13 Про Макс Ультра Супер</option>
-                            <option value='4'>Айпад Аир 6</option>
-                        </optgroup>
+                    <select id='optgroup' name="orders[]" multiple>
+                        @foreach($orders as $order)
+                            <optgroup label='{{ $order->name }}'>
+                                @foreach($order->products as $product)
+                                    <option value='{{ $product->id }}'>{{ $product->title }}</option>
+                                @endforeach
+                            </optgroup>
+                        @endforeach
                     </select>
                 </div>
-            </div>
+                <div class="mt-5">
+                    <button class="btn btn-primary" type="submit">Сохранить</button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection

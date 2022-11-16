@@ -19,7 +19,6 @@ return new class extends Migration
             $table->unsignedBigInteger('status_id');
             $table->string('name');
             $table->string('description')->nullable();
-            $table->integer('order');
             $table->timestamps();
         });
     }

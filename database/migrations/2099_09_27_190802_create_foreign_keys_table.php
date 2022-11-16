@@ -39,9 +39,10 @@ return new class extends Migration
             $table->foreign('address_id')->references('id')->on('addresses');
         });
 
-        Schema::table('package_has_orders', function (Blueprint $table) {
+        Schema::table('package_has_products', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('package_id')->references('id')->on('packages');
-            $table->foreign('order_id')->references('id')->on('orders');
+            $table->foreign('product_id')->references('id')->on('order_products');
         });
 
         Schema::table('user_documents', function (Blueprint $table) {

@@ -14,7 +14,6 @@ class Order extends Model
         'status_id',
         'name',
         'description',
-        'order'
     ];
 
     public function user()
@@ -30,10 +29,5 @@ class Order extends Model
     public function products()
     {
         return $this->hasMany(OrderProduct::class, 'order_id', 'id');
-    }
-
-    public function package()
-    {
-        return $this->hasOne(PackageHasOrder::class, 'order_id', 'id');
     }
 }

@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Package;
+use App\Models\PackageHasProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\Collection;
 
 class PackageController extends Controller
 {
@@ -51,12 +53,25 @@ class PackageController extends Controller
         $package = Package::find($id);
         $addresses = Address::where('user_id', auth()->user()->id)->get();
         $orders = Order::where('user_id', auth()->user()->id)->get();
+        $package_has_products = PackageHasProduct::where('user_id', auth()->user()->id)->get();
+        $sortable_orders = new Collection();
+        $sortable_products = new Collection();
+
+        foreach ($orders as $order) {
+            foreach ($package_has_products as $product){
+                if ($product->order->id == $order->id) {
+                    $sortable_orders->push($order);
+                } else {
+                    $sortable_orders->push();
+                }
+            }
+        }
 
         if (!$package){
             return redirect()->back()->with('package_not_find', 'Посылка не найдена');
         }
 
-        return view('packages.package', ['package' => $package, 'addresses' => $addresses]);
+        return view('packages.package', ['package' => $package, 'addresses' => $addresses, 'orders' => $orders]);
     }
 
     public function editPackagePost($id, Request $request){
@@ -96,5 +111,17 @@ class PackageController extends Controller
         $package->delete();
 
         return to_route('package.all')->with('package_delete_success');
+    }
+
+    public function addOrder($id, Request $request){
+        foreach ($request->orders as $order){
+            PackageHasProduct::create([
+                'user_id' => auth()->user()->id,
+                'package_id' => $id,
+                'product_id' => $order
+            ]);
+        }
+
+        return redirect()->back()->with('products_add_success', 'Товары успешно уложены в посылку.');
     }
 }

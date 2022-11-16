@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('title');
             $table->integer('price');
             $table->integer('quantity')->default(1);
-            $table->integer('order');
             $table->timestamps();
         });
     }

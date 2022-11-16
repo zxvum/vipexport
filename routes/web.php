@@ -74,6 +74,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{id}/edit', [PackageController::class, 'editPackageView'])->name('edit');
         Route::post('/{id}/edit/post', [PackageController::class, 'editPackagePost'])->name('edit.post');
 
+        Route::post('/{id}/add-order', [PackageController::class, 'addOrder'])->name('add-order');
+
         Route::get('/{id}/delete', [PackageController::class, 'deletePackage'])->name('delete');
     });
 });

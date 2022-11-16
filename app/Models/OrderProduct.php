@@ -17,7 +17,6 @@ class OrderProduct extends Model
         'title',
         'price',
         'quantity',
-        'order'
     ];
 
     public function shop()
@@ -33,5 +32,9 @@ class OrderProduct extends Model
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_id', 'id');
+    }
+
+    public function package(){
+        return $this->hasOne(PackageHasProduct::class, 'product_id', 'id');
     }
 }

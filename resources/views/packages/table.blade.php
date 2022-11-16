@@ -3,10 +3,10 @@
 @section('title', 'Все посылки')
 
 @section('content')
-    @if(session()->has('order_delete_success'))
+    @if(session()->has('package_delete_success'))
         <div class="col-12">
             <div class="alert alert-warning">
-                {{ session('order_delete_success') }}
+                {{ session('package_delete_success') }}
             </div>
         </div>
     @endif
@@ -43,12 +43,12 @@
                                 <tr>
                                     <td class="text-center">{{ $package->id }}</td>
                                     <td>{{ $package->title }}</td>
-                                    <td class="text-center" style="color: {{ $order->status->hex }}">{{ $package->status->name }}</td>
+                                    <td class="text-center" style="color: {{ $package->status->hex }}">{{ $package->status->name }}</td>
                                     <td class="text-center">
                                         1
                                     </td>
                                     <td class="text-center">
-                                        <a href="#" class="btn btn-primary btn-sm"><i class="bx bx-show"></i></a>
+                                        <a href="{{ route('package.view', ['id' => $package->id]) }}" class="btn btn-primary btn-sm"><i class="bx bx-show"></i></a>
                                         <a href="#" type="button" class="btn btn-success btn-sm"><i class="bx bx-edit"></i></a>
                                         <a href="#" onclick="confirm('Вы действительно хотите удалить заказ?')" class="btn btn-danger btn-sm"><i class="bx bx-trash"></i></a>
                                     </td>

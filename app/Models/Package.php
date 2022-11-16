@@ -28,9 +28,9 @@ class Package extends Model
         return $this->belongsTo(Address::class, 'address_id', 'id');
     }
 
-    public function orders()
+    public function products()
     {
-        return $this->hasMany(PackageHasOrder::class, 'package_id', 'id');
+        return $this->hasMany(OrderProduct::class, 'package_id', 'id');
     }
 
     public function status(){
