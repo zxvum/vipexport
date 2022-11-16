@@ -1,0 +1,139 @@
+@extends('layouts.app')
+
+@section('title', 'Посылка №'.$package->id)
+
+@section('css')
+    <link rel="stylesheet" href="{{ asset('assets/multiselect/css/multi-select.css') }}">
+@endsection
+
+@section('modals')
+    <div class="modal fade" id="edit" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form action="{{ route('package.edit.post', ['id' => $package->id]) }}" method="POST" class="modal-content">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editTitle">Редактирование заказа</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row row-cols-1">
+                        <div class="col">
+                            <label for="edit_title" class="form-label">Название</label>
+                            <input type="text" id="edit_title" class="form-control" placeholder="Название заказа">
+                        </div>
+                        <div class="col mt-3">
+                            <label for="edit_address" class="form-label">Адрес</label>
+                            <select name="edit_address" id="edit_address" class="form-select">
+                                <option selected value="" disabled>---</option>
+                                @foreach($addresses as $address)
+                                    <option value="{{ $address->id }}">{{ $address->country->name }}, {{ $address->city }}, {{ $address->street }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+@endsection
+
+@section('content')
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                    <h5 class="mb-0">Информация о посылке</h5> <span class="badge bg-info">{{ $package->status->name }}</span>
+                </div>
+                <span class="bx bx-edit h4 cursor-pointer" data-bs-toggle="modal" data-bs-target="#edit"></span>
+            </div>
+            <div class="card-body">
+                <div class="item__text row fw-semibold">
+                    <div class="col-md-6">
+                        <div class="item__client">Клиент: Владислав</div>
+                        <div>Дата создания: 10.08.2022 08:53</div>
+                        <div>Дата обновления: 10.08.2022 08:53</div>
+                        <div>Трек номер: US34SDA67ASD76</div>
+                        <div class="item__description"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="item__title">Данные доставки:</div>
+                        <div class="item__fio">ФИО: Тополь Ирина</div>
+                        <div class="item__address text-truncate" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" title="" data-bs-original-title="111 111, Россия, Кавказский район, Воронеж, Пушкина 222, дом 1">Адрес: 111 111, Россия, Кавказский район, Воронеж, Пушкина 222, дом 1</div>
+                        <div class="item__phone">Телефон: 89189999999</div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-start flex-column flex-md-row justify-content-between gap-3 mt-3">
+                    <div class="card accordion-item col-12 col-md-6">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionTwo" aria-expanded="false" aria-controls="accordionTwo">
+                                Отслеживание по трек номеру
+                            </button>
+                        </h2>
+                        <div id="accordionTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <span class="text-warning">Обратите внимание:</span> отслеживание по номеру отправления будет работать после того, как партия будет
+                                принята в отделение Почты России в Европе. При присвоении вы получите уведомление на свой email адрес.
+                                А также сможете самостоятельно отследивать статус на портале - <a href="https://pochta.ru">pochta.ru</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card accordion-item col-12 col-md-6">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionOne" aria-expanded="false" aria-controls="accordionOne">
+                                Параметры коробки
+                            </button>
+                        </h2>
+
+                        <div id="accordionOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample" style="">
+                            <div class="accordion-body d-flex flex-column gap-1">
+                                <div class="row row-cols-2">
+                                    <p><span class="fw-semibold">Размер:</span> 2.54 / 31.75 / 19.05</p>
+                                    <p class="text-truncate" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" title="" data-bs-original-title="(СМ) ширина/глубина/высота">(СМ) ширина/глубина/высота</p>
+                                </div>
+                                <div class="row row-cols-2">
+                                    <p><span class="fw-semibold">Вес:</span> 2.68</p>
+                                    <p>(КГ)</p>
+                                </div>
+                                <div class="row row-cols-2">
+                                    <p><span class="fw-semibold">Объемный вес:</span> 0.26</p>
+                                    <p class="text-truncate" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true" title="" data-bs-original-title="(КГ) <small>Объемный вес = ширина * высоту * ширину / 6000</small>">(КГ) <small>Объемный вес = ширина * высоту * ширину / 6000</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Товары в посылке</h5>
+            </div>
+            <div class="card-body">
+                <div class="mt-1 d-flex justify-content-center">
+                    <select id='optgroup' multiple='multiple'>
+                        <optgroup label='Заказ айфонов'>
+                            <option value='3'>Айфон 13 Про Макс Ультра Супер</option>
+                            <option value='4'>Айпад Аир 6</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('js')
+    <script src="{{ asset('assets/multiselect/js/jquery.multi-select.js') }}"></script>
+    <script>
+        $('#optgroup').multiSelect({
+            selectableOptgroup: true,
+            selectableHeader: "<p class='h5 mb-0 text-center'>Выбор</p>",
+            selectionHeader: "<p class='h5 mb-0 text-center'>В посылке</p>",
+        });
+    </script>
+@endsection
