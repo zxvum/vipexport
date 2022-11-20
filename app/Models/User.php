@@ -58,4 +58,8 @@ class User extends Authenticatable
     public function orders() {
         return $this->hasMany(Order::class, 'user_id', 'id');
     }
+
+    public function packages() {
+        return $this->hasMany(Package::class, 'user_id', 'id');
+    }
 }
