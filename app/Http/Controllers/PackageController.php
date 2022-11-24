@@ -50,22 +50,13 @@ class PackageController extends Controller
     }
 
     public function viewPackage($id){
-        $user = auth()->user();
         $package = Package::find($id);
-
-        $sortable_orders_in = new Collection();
-        $sortable_orders_out = new Collection();
-
-        $orders = Order::where('user_id', $user->id)->get();
-        $products = $package->products;
-
-        foreach ($orders as $order){
-            foreach ($products as $product) {
-                if ($order->id != $product->order->id){
-                    
-                }
-            }
+        $addresses = Address::where('user_id', auth()->user()->id)->get();
+        if (!$package){
+            return to_route('package.all')->with('package_not_find', 'Посылка не найдена');
         }
+
+        return view('packages.package', ['package' => $package, 'addresses' => $addresses]);
     }
 
     public function editPackagePost($id, Request $request){

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PackageController;
+use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -77,6 +78,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/{id}/add-order', [PackageController::class, 'addOrder'])->name('add-order');
 
         Route::get('/{id}/delete', [PackageController::class, 'deletePackage'])->name('delete');
+    });
+
+    Route::group(['prefix' => '/payment', 'as' => 'payment.'], function () {
+        Route::get('/', [PaymentController::class, ''])->name('view');
     });
 });
 

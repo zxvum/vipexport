@@ -117,13 +117,11 @@
                 @csrf
                 <div class="mt-1 d-flex justify-content-center">
                     <select id='optgroup' name="orders[]" multiple>
-                        @foreach($orders as $order)
-                            <optgroup label='{{ $order->name }}'>
-                                @foreach($order->products as $product)
-                                    <option value='{{ $product->id }}'>{{ $product->title }}</option>
-                                @endforeach
-                            </optgroup>
-                        @endforeach
+                        <option>Iphone 13 Pro Max 512gb Space Gray x2</option>
+                        <option>Iphone 14 Pro 256db Purple x10</option>
+                        <option>Ikea Тумба 5 полок x1</option>
+                        <option>Ikea шкаф x1</option>
+                        <option>Набор ручек x2</option>
                     </select>
                 </div>
                 <div class="mt-5">
