@@ -181,7 +181,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link {{ request()->is('admin/documents/check*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.documents.check.view') }}" class="nav-link {{ request()->is('admin/documents/check*') ? 'active' : '' }}">
                                     <i class="fas fa-check nav-icon"></i>
                                     <p>Проверка документов</p>
                                 </a>

@@ -50,7 +50,7 @@
                                     <td class="text-center">
                                         <a href="{{ route('package.view', ['id' => $package->id]) }}" class="btn btn-primary btn-sm"><i class="bx bx-show"></i></a>
                                         <a href="#" type="button" class="btn btn-success btn-sm"><i class="bx bx-edit"></i></a>
-                                        <a href="#" onclick="confirm('Вы действительно хотите удалить заказ?')" class="btn btn-danger btn-sm"><i class="bx bx-trash"></i></a>
+                                        <a href="{{ route('package.delete', ['id' => $package->id]) }}" onclick="confirm('Вы действительно хотите удалить заказ?')" class="btn btn-danger btn-sm"><i class="bx bx-trash"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

@@ -91,7 +91,7 @@
             </a>
         </li>
         <li class="menu-item">
-            <a href="invoices-and-payments.html" class="menu-link">
+            <a href="{{ route('payment.view') }}" class="menu-link">
                 <i class="menu-icon bx bx-credit-card-alt"></i>
                 <div data-i18n="Basic">Счета и платежи</div>
             </a>

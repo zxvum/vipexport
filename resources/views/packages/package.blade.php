@@ -19,19 +19,23 @@
                     <div class="row row-cols-1">
                         <div class="col">
                             <label for="edit_title" class="form-label">Название</label>
-                            <input type="text" id="edit_title" class="form-control" placeholder="Название заказа">
+                            <input type="text" id="edit_title" class="form-control" placeholder="Название заказа" value="{{ $package->title }}">
                         </div>
                         <div class="col mt-3">
                             <label for="edit_address" class="form-label">Адрес</label>
                             <select name="edit_address" id="edit_address" class="form-select">
                                 <option selected value="" disabled>---</option>
                                 @foreach($addresses as $address)
-                                    <option value="{{ $address->id }}">{{ $address->country->name }}, {{ $address->city }}, {{ $address->street }}</option>
+                                    <option value="{{ $address->id }}" @if($address->id == $package->address->id) selected @endif>{{ $address->country->name }}, {{ $address->city }}, {{ $address->street }}</option>
                                 @endforeach
                             </select>
                         </div>
+                        <div class="col mt-3">
+                            <label for="edit_description" class="form-label">Описание</label>
+                            <textarea name="" id="" cols="2" style="max-height: 150px" class="form-control"></textarea>
+                        </div>
                     </div>
-                </div>
+            </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Закрыть</button>
                     <button type="button" class="btn btn-primary">Сохранить</button>
@@ -117,11 +121,13 @@
                 @csrf
                 <div class="mt-1 d-flex justify-content-center">
                     <select id='optgroup' name="orders[]" multiple>
-                        <option>Iphone 13 Pro Max 512gb Space Gray x2</option>
-                        <option>Iphone 14 Pro 256db Purple x10</option>
-                        <option>Ikea Тумба 5 полок x1</option>
-                        <option>Ikea шкаф x1</option>
-                        <option>Набор ручек x2</option>
+                        @foreach($orders as $order)
+                            <optgroup label="{{ $order->name }}">
+                                @foreach($order->products as $product)
+                                    <option value="{{ $product->id }}">{{ $product->title }} x{{ $product->quantity }}</option>
+                                @endforeach
+                            </optgroup>
+                        @endforeach
                     </select>
                 </div>
                 <div class="mt-5">

@@ -56,7 +56,9 @@ class PackageController extends Controller
             return to_route('package.all')->with('package_not_find', 'Посылка не найдена');
         }
 
-        return view('packages.package', ['package' => $package, 'addresses' => $addresses]);
+        $orders = auth()->user()->orders()->get();
+
+        return view('packages.package', ['package' => $package, 'addresses' => $addresses, 'orders' => $orders]);
     }
 
     public function editPackagePost($id, Request $request){

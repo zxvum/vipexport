@@ -36,20 +36,6 @@
                             <input type="text" class="form-control" id="description" placeholder="Описание и пожелания к заказу">
                             @error('description') <small class="text-danger">{{ $message }}</small> @enderror
                         </div>
-                        <div class="gap-2 mb-3">
-                            <div class="form-check">
-                                <input name="default-radio-1" class="form-check-input" type="radio" value="" id="defaultRadio1" checked>
-                                <label class="form-check-label" for="defaultRadio1">
-                                    Товары
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input name="default-radio-1" class="form-check-input" type="radio" value="" id="defaultRadio2">
-                                <label class="form-check-label" for="defaultRadio2">
-                                    Заказы
-                                </label>
-                            </div>
-                        </div>
                         <button type="submit" class="btn btn-primary">Дальше</button>
                     </form>
                 </div>

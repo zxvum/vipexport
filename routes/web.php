@@ -81,7 +81,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['prefix' => '/payment', 'as' => 'payment.'], function () {
-        Route::get('/', [PaymentController::class, ''])->name('view');
+        Route::get('/', [PaymentController::class, 'viewPayment'])->name('view');
     });
 });
 
@@ -126,6 +126,8 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => ['auth']],
         // ДОДЕЛАТЬ
         Route::group(['prefix' => '/check', 'as' => 'check.'], function () {
             Route::get('/', [Admin\DocumentController::class, 'checkView'])->name('view');
+            Route::get('/{id}/cancel', [Admin\DocumentController::class, 'cancelDocument'])->name('cancel');
+            Route::get('/{id}/access', [Admin\DocumentController::class, 'accessDocument'])->name('access');
         });
     });
 });

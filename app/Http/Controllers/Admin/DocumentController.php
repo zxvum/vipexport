@@ -160,7 +160,31 @@ class DocumentController extends Controller
     // CHECK DOCUMENTS
 
     public function checkView(){
-        $documents = UserDocument::where('status_id', 2)->get();
-        return view('admin.documents.check', ['documents' => $documents]);
+        $document = UserDocument::where('status_id', 2)->first();
+        return view('admin.documents.check', ['document' => $document]);
+    }
+
+    public function cancelDocument($id){
+        $document = UserDocument::find($id);
+        if (!$document){
+            return abort(404);
+        }
+
+        $document->status_id = 4;
+        $document->save();
+
+        return to_route('admin.documents.check.view');
+    }
+
+    public function accessDocument($id){
+        $document = UserDocument::find($id);
+        if (!$document){
+            return abort(404);
+        }
+
+        $document->status_id = 3;
+        $document->save();
+
+        return to_route('admin.documents.check.view');
     }
 }
