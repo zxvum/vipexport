@@ -117,23 +117,43 @@
             <div class="card-header">
                 <h5 class="mb-0">Товары в посылке</h5>
             </div>
-            <form action="{{ route('package.add-order', ['id' => $package->id]) }}" method="POST" class="card-body">
-                @csrf
-                <div class="mt-1 d-flex justify-content-center">
-                    <select id='optgroup' name="orders[]" multiple>
-                        @foreach($orders as $order)
-                            <optgroup label="{{ $order->name }}">
-                                @foreach($order->products as $product)
-                                    <option value="{{ $product->id }}">{{ $product->title }} x{{ $product->quantity }}</option>
-                                @endforeach
-                            </optgroup>
-                        @endforeach
-                    </select>
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>Всего товаров: 0</div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-primary">Добавить заказ целиком</button>
+                        <button class="btn btn-primary">Выбрать из списка товаров</button>
+                    </div>
                 </div>
-                <div class="mt-5">
-                    <button class="btn btn-primary" type="submit">Сохранить</button>
+                <div class="table-responsive text-nowrap">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Название</th>
+                            <th class="text-center">Статус</th>
+                            <th class="text-center">Кол-во</th>
+                            <th class="text-center">Цена</th>
+                            <th class="text-center">Действия</th>
+                        </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                        <tr>
+                            <td class="text-center"><a href="#" class="link-primary">1</a></td>
+                            <td class="text-center">Товар такой-то</td>
+                            <td class="text-center"><p style="color: #000000;">Статус</p></td>
+                            <td class="text-center">12</td>
+                            <td class="text-center">599$</td>
+                            <td class="text-center">
+                                <a href="#" class="btn btn-primary btn-sm"><i class="bx bx-show"></i></a>
+                                <a href="#" type="button" class="btn btn-success btn-sm"><i class="bx bx-edit"></i></a>
+                                <a href="#" onclick="confirm('Вы действительно хотите удалить заказ?')" class="btn btn-danger btn-sm"><i class="bx bx-trash"></i></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 @endsection
