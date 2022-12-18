@@ -45,6 +45,10 @@
     </div>
 @endsection
 
+@section('modals')
+<div class="modal fade" id="" tabindex="-1" aria-hidden="true" style="display: none;"></div>
+@endsection
+
 @section('content')
     <div class="col-12">
         <div class="card mb-4">

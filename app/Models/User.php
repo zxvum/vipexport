@@ -62,4 +62,8 @@ class User extends Authenticatable
     public function packages() {
         return $this->hasMany(Package::class, 'user_id', 'id');
     }
+
+    public function ips(){
+        return $this->hasMany(UserIp::class, 'user_id', 'id');
+    }
 }

@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('user_ips', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('ip');
             $table->timestamps();
         });
     }

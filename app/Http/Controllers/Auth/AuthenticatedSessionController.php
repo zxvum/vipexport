@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Mail\LoginNewAccount;
+use App\Models\UserIp;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -31,6 +34,16 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+
+        $user_ip = UserIp::where('user_id', auth()->user()->id)->where('ip', $request->ip())->first();
+        if (!$user_ip){
+            UserIp::create([
+                'user_id' => auth()->user()->id,
+                'ip' => $request->ip()
+            ]);
+
+            Mail::to(auth()->user()->email)->send(new LoginNewAccount(['ip' => $request->ip()]));
+        }
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

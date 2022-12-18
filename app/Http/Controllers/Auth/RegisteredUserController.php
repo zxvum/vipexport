@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserDocument;
+use App\Models\UserIp;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -53,6 +54,11 @@ class RegisteredUserController extends Controller
             'surname' => $request->surname,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+        ]);
+
+        UserIp::create([
+            'user_id' => $user->id,
+            'ip' => $request->ip()
         ]);
 
         event(new Registered($user));

@@ -50,6 +50,10 @@ return new class extends Migration
             $table->foreign('document_id')->references('id')->on('documents');
             $table->foreign('status_id')->references('id')->on('user_document_statuses');
         });
+
+        Schema::table('user_ips', function(Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+        });
     }
 
     /**
